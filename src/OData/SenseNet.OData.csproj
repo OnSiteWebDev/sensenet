@@ -27,9 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ContentRepository\SenseNet.ContentRepository.csproj" />
     <ProjectReference Include="..\Services.Core\SenseNet.Services.Core.csproj" />
-    <ProjectReference Include="..\Storage\SenseNet.Storage.csproj">
-      <ExcludeAssets>all</ExcludeAssets>
-    </ProjectReference>
+    <ProjectReference Include="..\Storage\SenseNet.Storage.csproj" />
   </ItemGroup>
 
 </Project>
