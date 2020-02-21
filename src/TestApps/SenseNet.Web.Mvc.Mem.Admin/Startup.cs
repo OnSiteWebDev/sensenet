@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SenseNet.OData;
+using SenseNet.Web.Mvc.Mem.Admin.Models;
 
 namespace SenseNet.Web.Mvc.Mem.Admin
 {
@@ -25,6 +26,7 @@ namespace SenseNet.Web.Mvc.Mem.Admin
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.Configure<SenseNetEnvironment>(Configuration.GetSection("sensenet"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

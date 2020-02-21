@@ -1,10 +1,30 @@
-﻿@{
+﻿@using System.ComponentModel.DataAnnotations
+@using System.Linq
+@{
     ViewData["Title"] = "Home Page";
+    var envVars = Environment.GetEnvironmentVariables();
+    var keys = envVars.Keys.OfType<string>().OrderBy(x => x);
 }
 
-    <div class="text-center">
-        <h1 class="display-4">Welcome</h1>
-        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-        <p>Learn about <a href="https://sensenet.com">building sensenet apps</a>.</p>
-        <p>Click <a href="/odata.svc/Root/IMS/BuiltIn/Portal?metadata=no&$select=Name,Id,Type&$orderby=Id">here</a> to see built-in users and groups.</p>
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>Learn about <a href="https://sensenet.com">building sensenet apps</a>.</p>
+    <p>Click <a href="/odata.svc/Root/IMS/BuiltIn/Portal?metadata=no&$select=Name,Id,Type&$orderby=Id">here</a> to see built-in users and groups.</p>
+</div>
+<div>
+    <table>
+        @if (Model != null)
+        {
+            <tr><td>ContainerName</td><td>@Model.Container.Name</td></tr>
+            <tr><td>Authority</td><td>@Model.Container.Authority</td></tr>
+        }
+        @foreach (var key in keys)
+        {
+            <tr>
+                <td>@key</td>
+                <td>@envVars[key]</td>
+            </tr>
+        }
+    </table>
 </div>
