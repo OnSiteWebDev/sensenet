@@ -26,6 +26,17 @@ namespace SenseNet.Web.Api.Mem.Oidc
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.Configure<SenseNetEnvironment>(Configuration.GetSection("sensenet"));
+
+            services.AddHttpsRedirection(options =>
+            {
+                var defaultPort = 443;
+                var aspPort = 0;
+                var aspPortSrc = System.Environment.GetEnvironmentVariable("ASPNETCORE_HTTPS_PORT");
+                if (!string.IsNullOrEmpty(aspPortSrc))
+                    int.TryParse(aspPortSrc, out aspPort);
+                options.HttpsPort = aspPort > 0 ? aspPort : defaultPort;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
