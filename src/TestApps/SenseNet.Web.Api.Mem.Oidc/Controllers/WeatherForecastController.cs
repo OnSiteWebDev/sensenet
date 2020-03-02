@@ -85,20 +85,12 @@ namespace SenseNet.Web.Api.Mem.Oidc.Controllers
             {
                 var url = _snEnvironment.Authentication.Authority + "/";
 
-                var handler = new HttpClientHandler();
-                if(_environment.IsDevelopment())
-                    handler.ServerCertificateCustomValidationCallback = delegate { return true; };
-                var http = new HttpClient(handler);
-                var rmsg = http.GetAsync(url).GetAwaiter().GetResult();
-                var content = rmsg.ToString();
-
-                //WebRequest request = WebRequest.Create(url + "/");
-                //request.Method = "GET";
-                //WebResponse wr = await request.GetResponseAsync();
-                //Stream receiveStream = wr.GetResponseStream();
-                //string content;
-                //using (var reader = new StreamReader(receiveStream, Encoding.UTF8))
-                //    content = reader.ReadToEnd().Trim();
+                using var handler = new HttpClientHandler();
+                if (_environment.IsDevelopment())
+                    handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
+                using var http = new HttpClient(handler);
+                using var responseMsg = await http.GetAsync(url);
+                var content = responseMsg.ToString();
 
                 return content.Length > 200 ? content.Substring(0, 200) : content;
             }
@@ -110,11 +102,6 @@ namespace SenseNet.Web.Api.Mem.Oidc.Controllers
                 return msg;
             }
         }
-        //public IActionResult Pong()
-        //{
-        //    _logger.LogInformation($"PONG {DateTime.Now:HH:mm:ss}");
-        //    return View((object)$"PONG {_environment.Name} {DateTime.Now:HH:mm:ss}");
-        //}
 
     }
 }

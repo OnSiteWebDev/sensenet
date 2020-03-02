@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SenseNet.OData;
 
 namespace SenseNet.Web.Api.Mem.Oidc
 {
@@ -52,6 +53,9 @@ namespace SenseNet.Web.Api.Mem.Oidc
             app.UseRouting();
 
             app.UseAuthorization();
+
+            // [sensenet]: OData
+            app.UseSenseNetOdata();
 
             app.UseEndpoints(endpoints =>
             {
