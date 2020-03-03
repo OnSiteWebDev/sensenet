@@ -26,6 +26,7 @@ namespace SenseNet.Web.Client.Javascript
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.Configure<SenseNetEnvironment>(Configuration.GetSection("sensenet"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
