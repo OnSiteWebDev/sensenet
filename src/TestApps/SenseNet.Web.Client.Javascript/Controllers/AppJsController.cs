@@ -58,7 +58,7 @@ function log() {{
     }});
 }}
 
-document.getElementById(""environment"").innerText = JSON.stringify(env, null, 2);
+document.getElementById(""environment"").innerText = ""Environment:\n"" +  JSON.stringify(env, null, 2);
 
 document.getElementById(""login"").addEventListener(""click"", login, false);
 document.getElementById(""api"").addEventListener(""click"", api, false);
