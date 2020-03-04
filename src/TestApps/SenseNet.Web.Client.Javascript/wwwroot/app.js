@@ -1,9 +1,9 @@
 ﻿var env = {
-    isInContainer: true,
-    authority: "https://localhost:9998",
-    snrepo: "https://172.17.0.3",
-    api: "https://localhost:10001",
-    thisUrl: "https://localhost:5001/"
+    isInContainer: false,
+    authority: "https://localhost:44311",
+    snrepo: "https://localhost:10501",
+    api: "https://localhost:10501",
+    thisUrl: "https://localhost:5001"
 };
 
 function log() {
