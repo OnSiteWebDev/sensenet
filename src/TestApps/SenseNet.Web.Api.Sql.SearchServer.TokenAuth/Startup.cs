@@ -21,7 +21,7 @@ using SenseNet.Search.Lucene29;
 using SenseNet.Security.EFCSecurityStore;
 using SenseNet.Security.Messaging.RabbitMQ;
 
-namespace SenseNet.Web.Api.Sql.IndexServer.Admin
+namespace SenseNet.Web.Api.Sql.SearchServer.TokenAuth
 {
     public class Startup
     {

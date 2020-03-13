@@ -371,6 +371,7 @@ namespace SenseNet.ContentRepository
                 SnTrace.SnTracers.AddRange(tracers);
             }
 
+            
             SnLog.WriteInformation("Loggers and tracers initialized.", properties: new Dictionary<string, object>
             {
                 { "Loggers", SnLog.Instance?.GetType().Name },

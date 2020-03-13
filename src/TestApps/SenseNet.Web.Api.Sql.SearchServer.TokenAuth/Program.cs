@@ -7,10 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SenseNet.ContentRepository;
-using SenseNet.ContentRepository.Security;
 using SenseNet.Diagnostics;
 
-namespace SenseNet.Web.Api.Sql.IndexServer.Admin
+namespace SenseNet.Web.Api.Sql.SearchServer.TokenAuth
 {
     public class Program
     {
@@ -22,7 +21,7 @@ namespace SenseNet.Web.Api.Sql.IndexServer.Admin
 
             var repositoryBuilder = Startup.GetRepositoryBuilder(config, Environment.CurrentDirectory);
             repositoryBuilder
-                .UseAccessProvider(new DesktopAccessProvider())
+                //.UseAccessProvider(new DesktopAccessProvider())
                 .UseLogger(new SnFileSystemEventLogger())
                 .UseTracer(new SnFileSystemTracer());
 

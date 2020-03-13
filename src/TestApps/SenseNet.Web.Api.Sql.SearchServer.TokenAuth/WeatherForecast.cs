@@ -1,6 +1,6 @@
 using System;
 
-namespace SenseNet.Web.Api.Sql.IndexServer.Admin
+namespace SenseNet.Web.Api.Sql.SearchServer.TokenAuth
 {
     public class WeatherForecast
     {

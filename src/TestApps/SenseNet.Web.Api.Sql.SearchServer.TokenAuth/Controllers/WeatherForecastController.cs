@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace SenseNet.Web.Api.Sql.IndexServer.Admin.Controllers
+namespace SenseNet.Web.Api.Sql.SearchServer.TokenAuth.Controllers
 {
     [ApiController]
     [Route("[controller]")]

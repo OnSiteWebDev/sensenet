@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SenseNet.Web.Api.Sql.IndexServer.Admin
+namespace SenseNet.Web.Api.Sql.SearchServer.TokenAuth
 {
     public class ContainerEnvironment
     {
