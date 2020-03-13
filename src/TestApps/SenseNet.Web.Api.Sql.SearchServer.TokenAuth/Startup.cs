@@ -20,6 +20,9 @@ using SenseNet.OData;
 using SenseNet.Search.Lucene29;
 using SenseNet.Security.EFCSecurityStore;
 using SenseNet.Security.Messaging.RabbitMQ;
+using SenseNet.Services.Core;
+using SenseNet.Services.Core.Cors;
+using SenseNet.Services.Core.Virtualization;
 
 namespace SenseNet.Web.Api.Sql.SearchServer.TokenAuth
 {
@@ -61,9 +64,20 @@ namespace SenseNet.Web.Api.Sql.SearchServer.TokenAuth
 
             app.UseRouting();
 
+            // [sensenet]: custom CORS policy
+            app.UseSenseNetCors();
+            // [sensenet]: use Authentication and set User.Current
+            app.UseSenseNetAuthentication(options =>
+            {
+                options.AddJwtCookie = true;
+            });
+
             app.UseAuthorization();
 
-            // [sensenet]: OData
+            // [sensenet] Add the sensenet binary handler
+            app.UseSenseNetFiles();
+
+            // [sensenet]: OData middleware
             app.UseSenseNetOdata();
 
             app.UseEndpoints(endpoints =>
