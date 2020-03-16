@@ -99,7 +99,7 @@ namespace SenseNet.Web.Api.Sql.SearchServer.TokenAuth
                 .UseSecurityDataProvider(new EFCSecurityDataProvider(connectionString: ConnectionStrings.ConnectionString))
                 .UseSecurityMessageProvider(new RabbitMQMessageProvider())
                 .UseLucene29CentralizedSearchEngine(
-                    new NetTcpBinding(),
+                    new NetTcpBinding { Security = { Mode = SecurityMode.None } },
                     new EndpointAddress(configuration["sensenet:search:service:address"]))
                 .StartWorkflowEngine(false)
                 .DisableNodeObservers()
