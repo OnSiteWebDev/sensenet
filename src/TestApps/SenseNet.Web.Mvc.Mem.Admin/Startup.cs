@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SenseNet.OData;
+using SenseNet.Services.Core.Virtualization;
 using SenseNet.Web.Mvc.Mem.Admin.Models;
 
 namespace SenseNet.Web.Mvc.Mem.Admin
@@ -48,6 +49,9 @@ namespace SenseNet.Web.Mvc.Mem.Admin
             app.UseRouting();
 
             app.UseAuthorization();
+
+            // [sensenet] Add the sensenet binary handler
+            app.UseSenseNetFiles();
 
             // [sensenet]: OData
             app.UseSenseNetOdata();

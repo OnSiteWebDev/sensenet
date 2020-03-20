@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SenseNet.OData;
+using SenseNet.Services.Core.Virtualization;
 
 namespace SenseNet.Web.Api.Mem.Oidc
 {
@@ -53,6 +54,9 @@ namespace SenseNet.Web.Api.Mem.Oidc
             app.UseRouting();
 
             app.UseAuthorization();
+
+            // [sensenet] Add the sensenet binary handler
+            app.UseSenseNetFiles();
 
             // [sensenet]: OData
             app.UseSenseNetOdata();
