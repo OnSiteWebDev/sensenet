@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SenseNet.Web.Api.Mem.Oidc
+namespace SenseNet.Web.Api.Mem.TokenAuth
 {
     public class ContainerEnvironment
     {

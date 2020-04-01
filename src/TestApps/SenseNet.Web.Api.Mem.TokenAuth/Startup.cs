@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 using SenseNet.OData;
 using SenseNet.Services.Core.Virtualization;
 
-namespace SenseNet.Web.Api.Mem.Oidc
+namespace SenseNet.Web.Api.Mem.TokenAuth
 {
     public class Startup
     {

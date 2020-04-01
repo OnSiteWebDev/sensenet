@@ -1,6 +1,6 @@
 using System;
 
-namespace SenseNet.Web.Api.Mem.Oidc
+namespace SenseNet.Web.Api.Mem.TokenAuth
 {
     public class WeatherForecast
     {

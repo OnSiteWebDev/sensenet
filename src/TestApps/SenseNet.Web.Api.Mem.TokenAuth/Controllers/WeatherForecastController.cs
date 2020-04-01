@@ -13,7 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace SenseNet.Web.Api.Mem.Oidc.Controllers
+namespace SenseNet.Web.Api.Mem.TokenAuth.Controllers
 {
     [ApiController]
     [Route("")]

@@ -12,7 +12,7 @@ using SenseNet.ContentRepository.Security;
 using SenseNet.ContentRepository.Storage.Security;
 using SenseNet.Diagnostics;
 
-namespace SenseNet.Web.Api.Mem.Oidc
+namespace SenseNet.Web.Api.Mem.TokenAuth
 {
     public class Program
     {

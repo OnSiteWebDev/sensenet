@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "SenseNet.Web.Api.Mem.Oidc": {
+    "SenseNet.Web.Api.Mem.TokenAuth": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "weatherforecast",

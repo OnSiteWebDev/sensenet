@@ -7,8 +7,8 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0-buster AS build
 WORKDIR /src
-COPY ["TestApps/SenseNet.Web.Api.Mem.Oidc/SenseNet.Web.Api.Mem.Oidc.csproj", "TestApps/SenseNet.Web.Api.Mem.Oidc/"]
-COPY ["TestApps/SenseNet.Web.Api.Mem.Oidc/SenseNet.Web.Api.Mem.Oidc.sln", "TestApps/SenseNet.Web.Api.Mem.Oidc/"]
+COPY ["TestApps/SenseNet.Web.Api.Mem.TokenAuth/SenseNet.Web.Api.Mem.TokenAuth.csproj", "TestApps/SenseNet.Web.Api.Mem.TokenAuth/"]
+COPY ["TestApps/SenseNet.Web.Api.Mem.TokenAuth/SenseNet.Web.Api.Mem.TokenAuth.sln", "TestApps/SenseNet.Web.Api.Mem.TokenAuth/"]
 COPY ["BlobStorage/SenseNet.BlobStorage.csproj", "BlobStorage/"]
 COPY ["Common/SenseNet.Common.csproj", "Common/"]
 COPY ["ContentRepository/SenseNet.ContentRepository.csproj", "ContentRepository/"]
@@ -17,15 +17,15 @@ COPY ["OData/SenseNet.OData.csproj", "OData/"]
 COPY ["Search/SenseNet.Search.csproj", "Search/"]
 COPY ["Services.Core/SenseNet.Services.Core.csproj", "Services.Core/"]
 COPY ["Storage/SenseNet.Storage.csproj", "Storage/"]
-RUN dotnet restore "TestApps/SenseNet.Web.Api.Mem.Oidc/SenseNet.Web.Api.Mem.Oidc.sln"
+RUN dotnet restore "TestApps/SenseNet.Web.Api.Mem.TokenAuth/SenseNet.Web.Api.Mem.TokenAuth.sln"
 COPY . .
-WORKDIR "/src/TestApps/SenseNet.Web.Api.Mem.Oidc"
-RUN dotnet build "SenseNet.Web.Api.Mem.Oidc.sln" -c Release -o /app/build
+WORKDIR "/src/TestApps/SenseNet.Web.Api.Mem.TokenAuth"
+RUN dotnet build "SenseNet.Web.Api.Mem.TokenAuth.sln" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "SenseNet.Web.Api.Mem.Oidc.sln" -c Release -o /app/publish
+RUN dotnet publish "SenseNet.Web.Api.Mem.TokenAuth.sln" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "SenseNet.Web.Api.Mem.Oidc.dll"]
+ENTRYPOINT ["dotnet", "SenseNet.Web.Api.Mem.TokenAuth.dll"]
