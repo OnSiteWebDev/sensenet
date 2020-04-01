@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
-using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -15,21 +12,17 @@ using Microsoft.Extensions.Options;
 
 namespace SenseNet.Web.Api.Mem.TokenAuth.Controllers
 {
-    [ApiController]
+    //[Route("api/[controller]")]
     [Route("")]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    [ApiController]
+    public class InfoController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<InfoController> _logger;
         private readonly IWebHostEnvironment _environment;
         private readonly SenseNetEnvironment _snEnvironment;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger,
+        public InfoController(ILogger<InfoController> logger,
             IWebHostEnvironment environment, IOptions<SenseNetEnvironment> snEnvironment)
         {
             _logger = logger;
@@ -48,24 +41,14 @@ namespace SenseNet.Web.Api.Mem.TokenAuth.Controllers
                 {
                     ping = Ping().Result,
                     sensenet = _snEnvironment,
-                    system = GetEnvironment(),
-                    weather = Enumerable.Range(1, 5).Select(index => new WeatherForecast
-                        {
-                            Date = DateTime.Now.AddDays(index),
-                            TemperatureC = rng.Next(-20, 55),
-                            Summary = Summaries[rng.Next(Summaries.Length)]
-                        })
-                        .ToArray()
+                    system = GetEnvironment()
                 };
             }
 
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-                {
-                    Date = DateTime.Now.AddDays(index),
-                    TemperatureC = rng.Next(-20, 55),
-                    Summary = Summaries[rng.Next(Summaries.Length)]
-                })
-                .ToArray();
+            return new
+            {
+                ping = Ping().Result,
+            };
         }
 
         private object GetEnvironment()
