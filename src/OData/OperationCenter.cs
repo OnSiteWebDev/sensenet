@@ -365,8 +365,26 @@ namespace SenseNet.OData
             switch (parameter.Type)
             {
                 case JTokenType.String:
-                    value = parameter.Value<string>();
-                    return typeof(string);
+                    var stringVal = parameter.Value<string>();
+                    if (expectedType == typeof(string[]))
+                    {
+                        value = new [] { stringVal };
+                        return expectedType;
+                    }
+                    if (expectedType == typeof(List<string>))
+                    {
+                        value = new List<string>() {stringVal};
+                        return expectedType;
+                    }
+                    if (expectedType == typeof(string))
+                    {
+                        value = stringVal;
+                        return typeof(string);
+                    }
+
+                    throw new NotSupportedException(
+                        $"Too specific parameter (type: {expectedType.FullName}. " +
+                        $"Use string[] or List<string> instead)");
                 case JTokenType.Integer:
                     if (expectedType == typeof(int?))
                     {
