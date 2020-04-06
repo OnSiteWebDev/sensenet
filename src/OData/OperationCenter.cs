@@ -366,25 +366,21 @@ namespace SenseNet.OData
             {
                 case JTokenType.String:
                     var stringVal = parameter.Value<string>();
-                    if (expectedType == typeof(string[]))
+
+                    // Implicit conversion of one-element sets
+                    if (expectedType == typeof(string[]) || expectedType == typeof(IEnumerable<string>))
                     {
                         value = new [] { stringVal };
-                        return expectedType;
+                        return typeof(IEnumerable<string>);
                     }
                     if (expectedType == typeof(List<string>))
                     {
-                        value = new List<string>() {stringVal};
-                        return expectedType;
-                    }
-                    if (expectedType == typeof(string))
-                    {
-                        value = stringVal;
-                        return typeof(string);
+                        value = new List<string>() { stringVal };
+                        return typeof(List<string>);
                     }
 
-                    throw new NotSupportedException(
-                        $"Too specific parameter (type: {expectedType.FullName}. " +
-                        $"Use string[] or List<string> instead)");
+                    value = stringVal;
+                    return typeof(string);
                 case JTokenType.Integer:
                     if (expectedType == typeof(int?))
                     {

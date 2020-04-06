@@ -331,6 +331,71 @@ namespace SenseNet.ODataTests
         }
 
         [TestMethod]
+        public void OD_MBO_GetMethodByRequest_StringArray_OneItem()
+        {
+            StringEnumerableTest("string[]", @"{""a"":""value""}", "value");
+        }
+        [TestMethod]
+        public void OD_MBO_GetMethodByRequest_StringArray_MoreItems()
+        {
+            StringEnumerableTest("string[]", @"{""a"":[""value1"",""value2""]}", "value1,value2");
+        }
+        [TestMethod]
+        public void OD_MBO_GetMethodByRequest_StringList_OneItem()
+        {
+            StringEnumerableTest(
+                "List<string>",
+                @"{""a"":""value""}",
+                "value");
+        }
+        [TestMethod]
+        public void OD_MBO_GetMethodByRequest_StringList_MoreItems()
+        {
+            StringEnumerableTest(
+                "List<string>",
+                @"{""a"":[""value1"",""value2""]}",
+                "value1,value2");
+        }
+        [TestMethod]
+        public void OD_MBO_GetMethodByRequest_StringEnumerable_OneItem()
+        {
+            StringEnumerableTest(
+                "IEnumerable<string>",
+                @"{""a"":""value""}",
+                "value");
+        }
+        [TestMethod]
+        public void OD_MBO_GetMethodByRequest_StringEnumerable_MoreItems()
+        {
+            StringEnumerableTest(
+                "IEnumerable<string>",
+                @"{""a"":[""value1"",""value2""]}",
+                "value1,value2");
+        }
+        private void StringEnumerableTest(string typeInSignature, string requestBody, string expectedValue)
+        {
+            ODataTest(() =>
+            {
+                using (new CleanOperationCenterBlock())
+                {
+                    var m = AddMethod(new TestMethodInfo("fv1", $"Content content, {typeInSignature} a", null));
+
+                    // ACTION
+                    OperationCallingContext context;
+                    using (new OperationInspectorSwindler(new AllowEverything()))
+                        context = OperationCenter.GetMethodByRequest(GetContent(), "fv1", requestBody);
+                    // ASSERT
+                    Assert.AreEqual(m, context.Operation);
+                    Assert.AreEqual(1, context.Parameters.Count);
+                    var valueAsArray = context.Parameters["a"] as IEnumerable<string>;
+                    Assert.IsNotNull(valueAsArray);
+                    Assert.AreEqual(expectedValue, string.Join(",", valueAsArray));
+                }
+            });
+
+        }
+
+        [TestMethod]
         public void OD_MBO_GetMethodByRequest_Bool()
         {
             ODataTest(() =>
@@ -2542,6 +2607,9 @@ namespace SenseNet.ODataTests
                     case "Elephant[]": return typeof(Elephant[]);
                     case "Spaceship": return typeof(Spaceship);
                     case "Spaceship[]": return typeof(Spaceship[]);
+
+                    case "IEnumerable<string>": return typeof(IEnumerable<string>);
+                    case "List<string>": return typeof(List<string>);
 
                     case "IEnumerable<int>": return typeof(IEnumerable<int>);
                     case "List<int>": return typeof(List<int>);
