@@ -333,12 +333,20 @@ namespace SenseNet.ODataTests
         [TestMethod]
         public void OD_MBO_GetMethodByRequest_StringArray_OneItem()
         {
-            StringEnumerableTest("string[]", @"{""a"":""value""}", "value");
+            StringEnumerableTest(
+                "string[]", 
+                @"{""a"":""value""}", 
+                typeof(string[]),
+                "value");
         }
         [TestMethod]
         public void OD_MBO_GetMethodByRequest_StringArray_MoreItems()
         {
-            StringEnumerableTest("string[]", @"{""a"":[""value1"",""value2""]}", "value1,value2");
+            StringEnumerableTest(
+                "string[]", 
+                @"{""a"":[""value1"",""value2""]}",
+                typeof(string[]),
+                "value1,value2");
         }
         [TestMethod]
         public void OD_MBO_GetMethodByRequest_StringList_OneItem()
@@ -346,6 +354,7 @@ namespace SenseNet.ODataTests
             StringEnumerableTest(
                 "List<string>",
                 @"{""a"":""value""}",
+                typeof(List<string>),
                 "value");
         }
         [TestMethod]
@@ -354,6 +363,7 @@ namespace SenseNet.ODataTests
             StringEnumerableTest(
                 "List<string>",
                 @"{""a"":[""value1"",""value2""]}",
+                typeof(List<string>),
                 "value1,value2");
         }
         [TestMethod]
@@ -362,6 +372,7 @@ namespace SenseNet.ODataTests
             StringEnumerableTest(
                 "IEnumerable<string>",
                 @"{""a"":""value""}",
+                typeof(string[]),
                 "value");
         }
         [TestMethod]
@@ -370,9 +381,10 @@ namespace SenseNet.ODataTests
             StringEnumerableTest(
                 "IEnumerable<string>",
                 @"{""a"":[""value1"",""value2""]}",
+                typeof(string[]),
                 "value1,value2");
         }
-        private void StringEnumerableTest(string typeInSignature, string requestBody, string expectedValue)
+        private void StringEnumerableTest(string typeInSignature, string requestBody, Type expectedType, string expectedValue)
         {
             ODataTest(() =>
             {
@@ -387,6 +399,7 @@ namespace SenseNet.ODataTests
                     // ASSERT
                     Assert.AreEqual(m, context.Operation);
                     Assert.AreEqual(1, context.Parameters.Count);
+                    Assert.AreEqual(expectedType, context.Parameters["a"].GetType());
                     var valueAsArray = context.Parameters["a"] as IEnumerable<string>;
                     Assert.IsNotNull(valueAsArray);
                     Assert.AreEqual(expectedValue, string.Join(",", valueAsArray));

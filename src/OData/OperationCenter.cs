@@ -368,9 +368,14 @@ namespace SenseNet.OData
                     var stringVal = parameter.Value<string>();
 
                     // Implicit conversion of one-element sets
-                    if (expectedType == typeof(string[]) || expectedType == typeof(IEnumerable<string>))
+                    if (expectedType == typeof(string[]))
                     {
-                        value = new [] { stringVal };
+                        value = new[] { stringVal };
+                        return typeof(string[]);
+                    }
+                    if (expectedType == typeof(IEnumerable<string>))
+                    {
+                        value = new[] { stringVal };
                         return typeof(IEnumerable<string>);
                     }
                     if (expectedType == typeof(List<string>))
