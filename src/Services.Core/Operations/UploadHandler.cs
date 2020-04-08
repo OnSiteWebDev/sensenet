@@ -269,20 +269,24 @@ namespace SenseNet.Services.Core.Operations
             }
             else
             {
-                // handle uploaded chunks/stream
-                var file = _httpContext.Request.Form.Files.Count > 0 ? _httpContext.Request.Form.Files[0] : null;
-                if (file != null && file.Length == 0)
+                // handle uploaded chunks/stream/text
+                IFormFile file = null;
+                if (string.IsNullOrEmpty(FileText))
                 {
-                    // create content for an empty file if necessary
-                    var emptyFile = await GetContentAsync(Content, cancellationToken).ConfigureAwait(false);
-                    if (emptyFile != null && emptyFile.IsNew)
+                    file = _httpContext.Request.Form.Files.Count > 0 ? _httpContext.Request.Form.Files[0] : null;
+                    if (file != null && file.Length == 0)
                     {
-                        emptyFile.Save();
+                        // create content for an empty file if necessary
+                        var emptyFile = await GetContentAsync(Content, cancellationToken).ConfigureAwait(false);
+                        if (emptyFile != null && emptyFile.IsNew)
+                        {
+                            emptyFile.Save();
 
-                        return GetJsonFromContent(emptyFile, file);
+                            return GetJsonFromContent(emptyFile, file);
+                        }
+
+                        return null;
                     }
-
-                    return null;
                 }
 
                 if (file == null && string.IsNullOrEmpty(FileText))
