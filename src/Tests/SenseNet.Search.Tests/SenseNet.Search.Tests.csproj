@@ -104,6 +104,7 @@
     <Compile Include="IndexSerializationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SnQueryTests.cs" />
+    <Compile Include="SnTermTests.cs" />
     <Compile Include="VisitorTests.cs" />
   </ItemGroup>
   <ItemGroup>

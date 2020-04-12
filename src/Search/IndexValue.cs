@@ -137,9 +137,11 @@ namespace SenseNet.Search
         /// </summary>
         public string ValueAsString { get; }
 
+        protected const string TypeFlags = "SABILFDT";
+
         public override string ToString()
         {
-            var type = "SABILFDT"[(int)Type];
+            var type = TypeFlags[(int)Type];
             string value;
             switch (Type)
             {
